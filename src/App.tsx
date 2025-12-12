@@ -8,6 +8,7 @@ const client = generateClient<Schema>();
 function App() {
   const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
   const { signOut } = useAuthenticator();
+  const { user, signOut } = useAuthenticator();
 
   useEffect(() => {
     client.models.Todo.observeQuery().subscribe({
@@ -23,6 +24,8 @@ function App() {
   function deleteTodo(id: string) {
     client.models.Todo.delete({ id })
   }
+
+  
 
   return (
     <main>
@@ -43,6 +46,7 @@ function App() {
         </a>
       </div>
       <button onClick={signOut}>Sign out</button>
+      <h1>{user?.signInDetails?.loginId}'s todos</h1>
     </main>
   );
 }
